@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  Madison_prortal:
+    image: teddysun/xray:1.8.3
+    restart: always
+    command: xray -config /etc/xray/portal.json
+    volumes: 
+      - ./config/:/etc/xray
+    ports:
+      - "1520:1520/tcp"

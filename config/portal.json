@@ -1,0 +1,106 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "api": {
+        "tag": "api",
+        "services": ["StatsService"]
+    },
+    "stats": {
+    },
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "port": "80",
+                "network": "udp",
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "ip": ["geoip:private"],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "inboundTag": [
+                    "api"
+                ],
+                "outboundTag": "api"
+            }
+        ]
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 1520,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "sGLzG6kUwBpZd73sW0nq",
+                        "flow": ""
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.ebay.com:443",
+                    "xver": 0,
+                    "serverNames": ["www.ebay.com", "anywhere.ebay.com", "anywhere.ebay.com.hk", "anywhere.ebay.com.sg"],
+                    "privateKey": "gC7kYSH3IKao55jQkb7fUR33Ng04JKtP6PDaZ1HZs38",
+                    "shortIds": ["775eb6408888248e"]
+                },
+                "grpcSettings": {
+                    "serviceName": ""
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": ["http", "tls", "quic"]
+            }
+        },
+        {
+            "tag": "api",
+            "listen": "127.0.0.1",
+            "port": 11520,
+            "protocol": "dokodemo-door",
+            "settings": {
+              "address": "127.0.0.1"
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        }
+    ],
+    "policy": {
+        "levels": {
+          "0": {
+            "handshake": 4,
+            "connIdle": 300,
+            "uplinkOnly": 2,
+            "downlinkOnly": 5,
+            "statsUserUplink": false,
+            "statsUserDownlink": false
+          }
+        },
+        "system": {
+          "statsInboundUplink": true,
+          "statsInboundDownlink": true,
+          "statsOutboundUplink": true,
+          "statsOutboundDownlink": true
+        }
+    }
+}
