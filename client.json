@@ -1,0 +1,108 @@
+{
+    "log": {
+        "access": "",
+        "error": "",
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+        "listen": "0.0.0.0",
+        "port": 11002,
+        "protocol": "shadowsocks",
+        "settings": {
+            "method": "aes-128-gcm",
+            "password": "1234"
+        },
+        "streamSettings": {
+            "network": "tcp"
+        }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "proxy",
+            "protocol": "vless",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "jp_osaka.mius.cloud",
+                        "port": 30011,
+                        "users": [
+                            {
+                                "id": "sGLzG6kUwBpZd73sW0nq",
+                                "alterId": 0,
+                                "email": "t@t.tt",
+                                "security": "auto",
+                                "encryption": "none",
+                                "flow": ""
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "reality",
+                "realitySettings": {
+                    "serverName": "www.amazon.com",
+                    "fingerprint": "chrome",
+                    "show": false,
+                    "publicKey": "VQxVgczORkbSNdDrkNOYs6zMBINpViztTKDuWCeQsVE",
+                    "shortId": "775eb6408888248e",
+                    "spiderX": ""
+                },
+                "grpcSettings": {
+                    "serviceName": "",
+                    "multiMode": false,
+                    "idle_timeout": 60,
+                    "health_check_timeout": 20,
+                    "permit_without_stream": false,
+                    "initial_windows_size": 0
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": -1
+            }
+        },
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "tag": "block",
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            }
+        }
+    ],
+    "routing": {
+        "domainStrategy": "AsIs",
+        "rules": [
+            {
+                "type": "field",
+                "inboundTag": ["api"],
+                "outboundTag": "api",
+                "enabled": true
+            },
+            {
+                "id": "5708766234462982042",
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": ["127.0.0.1", "192.168.1.1"],
+                "enabled": true
+            },
+            {
+                "id": "4875564606963903266",
+                "type": "field",
+                "outboundTag": "proxy",
+                "domain": ["dns.digitalsize.net"],
+                "enabled": true
+            }
+        ]
+    }
+} 
