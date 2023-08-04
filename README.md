@@ -12,21 +12,4 @@ img {
 
 ![图片描述](https://github.com/sengnie/Reality/blob/main/url.png)
 
-
-<style>
-img {
-  width: 500px;
-  height: 300px;
-}
-</style>
-
-![示例照片]([example.jpg](https://github.com/sengnie/Reality/blob/main/url.png)
-
-<style>
-img {
-  width: 500px;
-  height: 300px;
-}
-</style>
-
-![示例照片](https://github.com/sengnie/Reality/blob/main/url.png)
+<img src="https://github.com/sengnie/Reality/blob/main/url.png" alt="示例照片" width="500" height="300">
